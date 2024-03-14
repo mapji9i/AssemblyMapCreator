@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="AssemblyMapCreator:jar">
+    <output-path>$PROJECT_DIR$/AssemblyMapCreator</output-path>
+    <root id="archive" name="AssemblyMapCreator.jar">
+      <element id="module-output" name="AssemblyMapCreator" />
+    </root>
+  </artifact>
+</component>

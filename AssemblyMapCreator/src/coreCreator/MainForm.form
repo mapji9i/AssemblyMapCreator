@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="coreCreator.MainForm">
+  <grid id="27dc6" binding="mainPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
+    <constraints>
+      <xy x="20" y="20" width="861" height="609"/>
+    </constraints>
+    <properties/>
+    <border type="none" title-position="3"/>
+    <children>
+      <grid id="765ce" binding="UpPanel" layout-manager="GridLayoutManager" row-count="1" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
+        <constraints border-constraint="North"/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="428d8" class="javax.swing.JButton" binding="loadButton" default-binding="true">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <alignmentX value="0.1"/>
+              <alignmentY value="0.1"/>
+              <text value="Load"/>
+            </properties>
+          </component>
+          <component id="88bdb" class="javax.swing.JButton" binding="saveButton" default-binding="true">
+            <constraints>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <alignmentX value="0.1"/>
+              <alignmentY value="0.1"/>
+              <text value="Save"/>
+            </properties>
+          </component>
+          <component id="eb34a" class="javax.swing.JButton" binding="exitButton" default-binding="true">
+            <constraints>
+              <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Exit"/>
+            </properties>
+          </component>
+          <hspacer id="695eb">
+            <constraints>
+              <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+          </hspacer>
+          <component id="6bba1" class="javax.swing.JButton" binding="saveAsButton">
+            <constraints>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <alignmentX value="0.1"/>
+              <alignmentY value="0.1"/>
+              <text value="Save as"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <grid id="af803" binding="coreParameters" layout-manager="GridBagLayout">
+        <constraints border-constraint="West"/>
+        <properties>
+          <maximumSize width="600" height="2147483647"/>
+        </properties>
+        <border type="line" title="Core Parameters"/>
+        <children>
+          <component id="b561a" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.5" weighty="0.01"/>
+            </constraints>
+            <properties>
+              <text value="Core radius [m]:"/>
+            </properties>
+          </component>
+          <component id="3754d" class="javax.swing.JTextField" binding="assemblyStepTextField">
+            <constraints>
+              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+              <gridbag weightx="0.1" weighty="0.01"/>
+            </constraints>
+            <properties>
+              <text value="0.179"/>
+            </properties>
+          </component>
+          <component id="70070" class="javax.swing.JLabel" binding="AssemblyStep">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.1" weighty="0.01"/>
+            </constraints>
+            <properties>
+              <text value="Assembly step [m]:"/>
+            </properties>
+          </component>
+          <component id="bea61" class="javax.swing.JTextField" binding="indentTextField">
+            <constraints>
+              <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+              <gridbag weightx="0.0" weighty="0.01"/>
+            </constraints>
+            <properties>
+              <text value="0.179"/>
+            </properties>
+          </component>
+          <component id="4f8e4" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.01"/>
+            </constraints>
+            <properties>
+              <text value="Indent [m]:"/>
+            </properties>
+          </component>
+          <component id="8c711" class="javax.swing.JButton" binding="FlipAxis">
+            <constraints>
+              <grid row="6" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.01"/>
+            </constraints>
+            <properties>
+              <text value="Flip XY axis"/>
+            </properties>
+          </component>
+          <component id="282ce" class="javax.swing.JButton" binding="rotatePlus60DegButton">
+            <constraints>
+              <grid row="7" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.01"/>
+            </constraints>
+            <properties>
+              <actionCommand value="Rotate +60 deg"/>
+              <label value="Rotate +60 deg"/>
+              <text value="Rotate +60 deg"/>
+            </properties>
+          </component>
+          <component id="21c5" class="javax.swing.JButton" binding="rotateMinus60DegButton">
+            <constraints>
+              <grid row="8" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.01"/>
+            </constraints>
+            <properties>
+              <actionCommand value=""/>
+              <label value="Rotate -60 deg"/>
+              <text value="Rotate -60 deg"/>
+            </properties>
+          </component>
+          <component id="d886f" class="javax.swing.JTextField" binding="coreRadiusTextField">
+            <constraints>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+              <gridbag weightx="0.5" weighty="0.01"/>
+            </constraints>
+            <properties>
+              <text value="1"/>
+            </properties>
+          </component>
+          <component id="afeb6" class="javax.swing.JButton" binding="mirrorXAxisButton" default-binding="true">
+            <constraints>
+              <grid row="9" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <text value="Mirror X axis"/>
+            </properties>
+          </component>
+          <component id="5b134" class="javax.swing.JButton" binding="mirrorYAxisButton" default-binding="true">
+            <constraints>
+              <grid row="10" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <text value="Mirror Y axis"/>
+            </properties>
+          </component>
+          <component id="75a02" class="javax.swing.JLabel" binding="assemblyCount">
+            <constraints>
+              <grid row="12" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <text value="AssemblyCount=0"/>
+            </properties>
+          </component>
+          <component id="b525b" class="javax.swing.JButton" binding="generateAssebliesButton" default-binding="true">
+            <constraints>
+              <grid row="3" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <text value="Generate asseblies"/>
+            </properties>
+          </component>
+          <component id="1ba19" class="javax.swing.JButton" binding="deleteAssemblyButton">
+            <constraints>
+              <grid row="4" column="0" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.1" weighty="0.01"/>
+            </constraints>
+            <properties>
+              <text value="Delete assembly"/>
+            </properties>
+          </component>
+          <component id="655fa" class="javax.swing.JButton" binding="generateNumerationButton" default-binding="true">
+            <constraints>
+              <grid row="5" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.01"/>
+            </constraints>
+            <properties>
+              <text value="Generate numeration"/>
+            </properties>
+          </component>
+          <vspacer id="90e26">
+            <constraints>
+              <grid row="11" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.999"/>
+            </constraints>
+          </vspacer>
+        </children>
+      </grid>
+      <grid id="7d24" binding="assemblyProperties" layout-manager="GridBagLayout">
+        <constraints border-constraint="East"/>
+        <properties>
+          <maximumSize width="500" height="2147483647"/>
+          <minimumSize width="300" height="49"/>
+          <preferredSize width="300" height="49"/>
+        </properties>
+        <border type="bevel-lowered" title="Assembly properties"/>
+        <children>
+          <component id="f6949" class="javax.swing.JButton" binding="addPropertyButton" default-binding="true">
+            <constraints>
+              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="1.0" weighty="0.02"/>
+            </constraints>
+            <properties>
+              <text value="Add property"/>
+            </properties>
+          </component>
+          <scrollpane id="ac44a" binding="tableScrollPane">
+            <constraints>
+              <grid row="0" column="0" row-span="2" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="1.0" weighty="0.8"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="4c346" class="javax.swing.JTable" binding="tableProperties">
+                <constraints/>
+                <properties>
+                  <autoCreateColumnsFromModel value="true"/>
+                  <autoResizeMode value="1"/>
+                  <cellSelectionEnabled value="false"/>
+                  <columnSelectionAllowed value="false"/>
+                  <dragEnabled value="false"/>
+                  <dropMode value="INSERT"/>
+                  <focusable value="false"/>
+                  <requestFocusEnabled value="false"/>
+                  <rowSelectionAllowed value="true"/>
+                  <updateSelectionOnSort value="true"/>
+                </properties>
+              </component>
+            </children>
+          </scrollpane>
+          <vspacer id="4934">
+            <constraints>
+              <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.8"/>
+            </constraints>
+          </vspacer>
+          <component id="d7445" class="javax.swing.JButton" binding="hidePropertyButton" default-binding="true">
+            <constraints>
+              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <text value="Hide property values"/>
+            </properties>
+          </component>
+          <component id="63152" class="javax.swing.JButton" binding="setPropertiesButton">
+            <constraints>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="1.0" weighty="0.02"/>
+            </constraints>
+            <properties>
+              <text value="Apply properties"/>
+            </properties>
+          </component>
+          <component id="1b205" class="javax.swing.JButton" binding="removePropertyButton">
+            <constraints>
+              <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="1.0" weighty="0.02"/>
+            </constraints>
+            <properties>
+              <text value="Remove property"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+    </children>
+  </grid>
+</form>
