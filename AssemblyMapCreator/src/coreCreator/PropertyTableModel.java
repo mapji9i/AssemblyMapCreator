@@ -3,23 +3,18 @@ package coreCreator;
 import javax.swing.*;
 import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.util.ArrayList;
-import java.util.EventObject;
 
 import static coreCreator.Core.core;
 import static coreCreator.CoreComponent.coreComponent;
 import static coreCreator.MainForm.getMainForm;
 
 public class PropertyTableModel extends DefaultTableModel {
-    private static String [] header = {"Property", "Value","Show"};
+    private static final String [] header = {"Property", "Value","Show"};
 
     public PropertyTableModel() {
        super(null, header);
@@ -31,8 +26,7 @@ public class PropertyTableModel extends DefaultTableModel {
 
     @Override
     public boolean isCellEditable(int row, int column) {
-        if (column==0 && row<4) return  false;
-        return true;
+        return column != 0 || row >= 4;
     }
 }
 class PropertyTableRenderer extends JButton implements TableCellRenderer {
@@ -77,12 +71,14 @@ class PropertyTableActionCellEditor extends DefaultCellEditor {
     @Override
     public Object getCellEditorValue() {
         if(clicked){
-            if (coreComponent.getDrawingFieldName()==null || !coreComponent.getDrawingFieldName().equals(""+getMainForm().getPropertiesTableValueAt(rowIndex, 0))) {
-                coreComponent.setDrawingFieldName("" + getMainForm().getPropertiesTableValueAt(rowIndex, 0));
+            if (coreComponent.getDrawingFieldName()==null || !coreComponent.getDrawingFieldName().equals(String.valueOf(getMainForm().getPropertiesTableValueAt(rowIndex, 0)))) {
+                coreComponent.setDrawingFieldName(String.valueOf(getMainForm().getPropertiesTableValueAt(rowIndex, 0)));
                 coreComponent.setDrawingFieldIndex(rowIndex);
+                MainForm.getMainForm().visibleFormatAtributes(true);
             }else{
                 coreComponent.setDrawingFieldName(null);
                 coreComponent.setDrawingFieldIndex(-1);
+                MainForm.getMainForm().visibleFormatAtributes(false);
             }
             core.repaintCore();
         }

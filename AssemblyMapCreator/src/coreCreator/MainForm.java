@@ -1,13 +1,14 @@
 package coreCreator;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Vector;
 
 import static coreCreator.Core.core;
@@ -44,7 +45,21 @@ public class MainForm {
     private JButton saveAsButton;
     private JButton removePropertyButton;
 
-    private JButton generateCoordinatesButton;
+    private JLabel textFormatLabel;
+    private JComboBox colorType;
+    private JCheckBox showValueCheckBox;
+    private JSlider slider1;
+    private JSpinner spinner1;
+
+
+    public boolean getShowValueKey() {
+        return showValueCheckBox.isSelected();
+    }
+
+    public int getColorType() {
+        return colorType.getSelectedIndex();
+    }
+
     private static JFrame frame;
 
     public static MainForm getMainForm() {
@@ -52,8 +67,57 @@ public class MainForm {
     }
 
     private static MainForm mainForm;
+
+    public void visibleFormatAtributes(Boolean enable) {
+        slider1.setEnabled(enable);
+        spinner1.setEnabled(enable);
+        if (!enable) {
+            slider1.setValue(30);
+            spinner1.setValue(4);
+        }
+    }
+
+    public String getDigitAfterPoint() {
+        return spinner1.getValue().toString();
+    }
+
+    public double getTextFontPart() {
+        return slider1.getValue() / 100.0;
+    }
+
     public MainForm() {
-        mainForm=this;
+        mainForm = this;
+        slider1.setMaximum(100);
+        slider1.setMinimum(0);
+        slider1.setValue(30);
+        slider1.setEnabled(false);
+        spinner1.setValue(4);
+        spinner1.setEnabled(false);
+
+        showValueCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                core.repaintCore();
+            }
+        });
+        slider1.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                core.repaintCore();
+            }
+        });
+        spinner1.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                core.repaintCore();
+            }
+        });
+        colorType.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                core.repaintCore();
+            }
+        });
         FlipAxis.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -61,7 +125,7 @@ public class MainForm {
                 double[] newCoordinates;
                 for (Assembly assembly : core.assemblies) {
 
-                    newCoordinates = core.rotateCoordinates(assembly.getX(), assembly.getY(), 1, -1, Math.PI / 2);
+                    newCoordinates = Core.rotateCoordinates(assembly.getX(), assembly.getY(), 1, -1, Math.PI / 2);
                     assembly.setX(newCoordinates[0]);
                     assembly.setY(newCoordinates[1]);
 
@@ -72,6 +136,7 @@ public class MainForm {
 
             }
         });
+
 
         coreRadiusTextField.addKeyListener(new KeyListener() {
             @Override
@@ -149,7 +214,7 @@ public class MainForm {
                 double[] newCoordinates;
                 for (Assembly assembly : core.assemblies) {
 
-                    newCoordinates = core.rotateCoordinates(assembly.getX(), assembly.getY(), 1, 1, Math.PI / 3);
+                    newCoordinates = Core.rotateCoordinates(assembly.getX(), assembly.getY(), 1, 1, Math.PI / 3);
                     assembly.setX(newCoordinates[0]);
                     assembly.setY(newCoordinates[1]);
                     core.rotationAngle+=Math.PI / 3;
@@ -165,7 +230,7 @@ public class MainForm {
                 double[] newCoordinates;
                 for (Assembly assembly : core.assemblies) {
 
-                    newCoordinates = core.rotateCoordinates(assembly.getX(), assembly.getY(), 1, 1, -Math.PI / 3);
+                    newCoordinates = Core.rotateCoordinates(assembly.getX(), assembly.getY(), 1, 1, -Math.PI / 3);
                     assembly.setX(newCoordinates[0]);
                     assembly.setY(newCoordinates[1]);
                     core.rotationAngle-=Math.PI / 3;
@@ -180,7 +245,7 @@ public class MainForm {
                 double[] newCoordinates;
                 for (Assembly assembly : core.assemblies) {
 
-                    newCoordinates = core.rotateCoordinates(assembly.getX(), assembly.getY(),  -1, 1, 0);
+                    newCoordinates = Core.rotateCoordinates(assembly.getX(), assembly.getY(),  -1, 1, 0);
                     assembly.setX(newCoordinates[0]);
                     assembly.setY(newCoordinates[1]);
 
@@ -195,7 +260,7 @@ public class MainForm {
                 double[] newCoordinates;
                 for (Assembly assembly : core.assemblies) {
 
-                    newCoordinates = core.rotateCoordinates(assembly.getX(), assembly.getY(),  1, -1, 0);
+                    newCoordinates = Core.rotateCoordinates(assembly.getX(), assembly.getY(),  1, -1, 0);
                     assembly.setX(newCoordinates[0]);
                     assembly.setY(newCoordinates[1]);
 
@@ -217,8 +282,9 @@ public class MainForm {
                 super.mouseClicked(e);
                 updateCoreParameters();
                 core.generateCoordinates();
-                setCoreAssemblyCountView(core.assemblies.size()+"");
+                setCoreAssemblyCountView(String.valueOf(core.assemblies.size()));
                 core.repaintCore();
+                visibleFormatAtributes(true);
             }
         });
 
@@ -356,9 +422,9 @@ public class MainForm {
                 while((tmpString=reader.readLine())!=null){
                     valuesFromFile=tmpString
                             .replaceAll("[,;]+"," ")
-                            .replaceAll("^\s+","")
-                            .replaceAll("\s$+","")
-                            .split("\s+");
+                            .replaceAll("^ +","")
+                            .replaceAll(" $+","")
+                            .split(" +");
                     allValuesFromFile.add(valuesFromFile);
                 }
             }catch(IOException e){
@@ -465,7 +531,7 @@ public class MainForm {
         if(newSelectedAssembly!=null)
             core.addToSelection(newSelectedAssembly);
         core.repaintCore();
-        setCoreAssemblyCountView(core.assemblies.size()+"");
+        setCoreAssemblyCountView(String.valueOf(core.assemblies.size()));
         AssemblyComponent.ctrlKeyPressed=false;
     }
     private void createUIComponents() {
@@ -527,7 +593,7 @@ public class MainForm {
 
         for(AssemblyProperty property:core.assemblies.get(0).getProperties()) {
             row=new Object[2];
-            row[0]=(Object) property.getName();
+            row[0]= property.getName();
             for (Assembly assembly : core.selection) {
                 if (row[1]==null) {
 
@@ -539,11 +605,11 @@ public class MainForm {
                     case "Integer":
 
                         if (Math.abs((Integer) row[1] - (Integer) assembly.getPropertyValueByName(property.getName())) > 0.00001)
-                            row[1] = (Object) "<Different values>";
+                            row[1] = "<Different values>";
                         break;
                     case "Double":
                         if (Math.abs((Double) row[1] - (Double) assembly.getPropertyValueByName(property.getName())) > 0.00001)
-                            row[1] = (Object) "<Different values>";
+                            row[1] = "<Different values>";
                         break;
                 }
 
@@ -592,7 +658,7 @@ public class MainForm {
             int propertyIndex=-1;
             //assembly.getProperties().clear();
             for(Vector obj:properties){
-                String value=obj.get(1)+"";
+                String value= String.valueOf(obj.get(1));
                 propertyIndex++;
                 if (value.equals("<Different values>")) continue;
 
@@ -600,7 +666,7 @@ public class MainForm {
                 obj.remove(1);
                 obj.add(1,newValue);
                 AssemblyProperty property = new AssemblyProperty(null,null);
-                if(((String)obj.get(0)).equals("Group"))
+                if(obj.get(0).equals("Group"))
                     property=new AssemblyGroup("Group",(double) 1);
                 property.setFieldsFromRow(obj.toArray(new Object[2]));
                 assembly.getProperties().remove(propertyIndex);

@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import static coreCreator.Core.core;
 import static coreCreator.CoreComponent.coreComponent;
@@ -34,7 +33,7 @@ public class AssemblyComponent extends JButton {
         setOpaque(true);
         setFocusPainted(false);
         setContentAreaFilled(false);
-        this.fillColor = assembly.getGroupColor();
+        this.fillColor = Color.WHITE;
         updateGeometry();
 
         addActionListener(new ActionListener() {
@@ -139,7 +138,7 @@ public class AssemblyComponent extends JButton {
 
         FindAssembly[] findThreads = new FindAssembly[coreCount];
         ArrayList<Assembly> searchField = core.assemblies;
-        int searchDelta=((int) searchField.size()/coreCount);
+        int searchDelta=(searchField.size() /coreCount);
         int start=0,end=searchDelta;
         for (int i=0; i<coreCount; i++){
             findThreads[i]=new FindAssembly(searchField.subList(start,end).toArray(new Assembly[end-start]) ,selectedAssembly,direction);
@@ -184,44 +183,85 @@ public class AssemblyComponent extends JButton {
     @Override
      public void paint(Graphics g) {
         super.paint(g);
-        this.pointCoords=generatePoints(assembly.getX(),assembly.getY(),core.assemblyStep);
+        this.pointCoords = generatePoints(assembly.getX(), assembly.getY(), core.assemblyStep);
         setScaledSize();
         reposition();
-        Graphics2D g2d=(Graphics2D) g;
+        Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setColor(Color.white);
-        drawHexagon(g2d,fillColor);
-        if(coreComponent.getDrawingFieldName()!=null){
-            String valueToDraw=String.format("%6.4f",assembly.getPropertyValueByName(coreComponent.getDrawingFieldName())).replaceAll(",?0*$","");
-            int[] fontDimensions= findPropertyTextSize(g,getWidth(),getHeight());
-            g.setFont(new Font("TimesRoman", Font.CENTER_BASELINE,  fontDimensions[1]));
-            g.drawString(valueToDraw, getWidth()/2-(fontDimensions[0]/5)*valueToDraw.length()/2,getHeight()/2+fontDimensions[1]/4);
+        String fieldname = coreComponent.getDrawingFieldName();
+        MainForm form = MainForm.getMainForm();
+        if (fieldname != null) {
+            double value = (Double) assembly.getPropertyValueByName(fieldname);
+            String numberFormat = "%6." + MainForm.getMainForm().getDigitAfterPoint() + "f";
+            String valueToDraw = String.format(numberFormat
+                    , value).replaceAll(",?0*$", "");
+            //double[] minMaxValues=AssemblyProperty.getMinMaxValue(fieldname);
+            if (!core.selection.contains(this.assembly)) {
+                switch (form.getColorType()) {
+                    case (0):
+                        this.fillColor = Color.WHITE;
+                        break;
+                    case (1):
+                        this.fillColor = getColor(10, value);
+                        break;
+                    case (2):
+                        this.fillColor = assembly.getGroupColor();
+                        break;
+                }
+            }
+            drawHexagon(g2d, fillColor);
+            if (form.getShowValueKey()) {
+                int[] fontDimensions = findPropertyTextSize(g, getWidth(), getHeight());
+                g.setFont(new Font("TimesRoman", Font.CENTER_BASELINE, fontDimensions[1]));
+                g.drawString(valueToDraw, getWidth() / 2 - (fontDimensions[0] / 5) * valueToDraw.length() / 2, getHeight() / 2 + fontDimensions[1] / 2);
+            }
+        } else {
+            if (!core.selection.contains(this.assembly))
+                this.fillColor = assembly.getGroupColor();
+            drawHexagon(g2d, fillColor);
         }
 
-    }
-    private void reposition(){
-        int[] coordinates=coreComponent.convertCoordinates(assembly.getX(),assembly.getY());
-        setOnCoordinate(coordinates[0],coordinates[1]);
-    }
-    private int[] findPropertyTextSize(Graphics g, int widht, int height){
-        int textWidth=widht, textHeight=height;
-        String stringToDraw=null;
-        for(Assembly assembly:core.assemblies) {
-            textWidth=widht;
-            textHeight+=1;
 
-                stringToDraw= String.format("%6.4f",1.0);
+    }
+
+    private Color getColor(int numberOfColors, double value) {
+        String fieldname = coreComponent.getDrawingFieldName();
+        double[] minMaxValues = AssemblyProperty.getMinMaxValue(fieldname);
+        float linearValue = (float) (240 / (360 * (minMaxValues[1] - minMaxValues[0])) * (minMaxValues[1] - value));
+        float delta = (float) 240 / (360 * (numberOfColors + 1));
+        int numberOfRange = (int) (linearValue / delta);
+        float h = (delta * numberOfRange);
+        return Color.getHSBColor((float) (240 / (360 * (minMaxValues[1] - minMaxValues[0])) * (minMaxValues[1] - value)), 1f, 1f);
+        //return Color.getHSBColor(h, 1f, 1f);
+    }
+
+    private void reposition() {
+        int[] coordinates = coreComponent.convertCoordinates(assembly.getX(), assembly.getY());
+        setOnCoordinate(coordinates[0], coordinates[1]);
+    }
+
+    private int[] findPropertyTextSize(Graphics g, int widht, int height) {
+        double portion = MainForm.getMainForm().getTextFontPart();
+        int textWidth = widht, textHeight = height;
+        String stringToDraw = null;
+        for (Assembly assembly : core.assemblies) {
+            textWidth=widht;
+            textHeight += 1;
+            String numberFormat = "%6." + MainForm.getMainForm().getDigitAfterPoint() + "f";
+
+            stringToDraw = String.format(numberFormat, 1.0);
             while (textWidth > 0.7 * widht) {
                 textHeight -= 1;
                 g.setFont(new Font("TimesRoman", Font.CENTER_BASELINE, textHeight));
                 textWidth = g.getFontMetrics().charsWidth(stringToDraw.toCharArray(), 0, stringToDraw.length());
             }
         }
-        if (textHeight>0.4*height)
-            textHeight=(int) round(0.4*height);
+        //if (textHeight>portion*height)
+        textHeight = (int) round(portion * height);
         g.setFont(new Font("TimesRoman", Font.CENTER_BASELINE, textHeight));
         textWidth = g.getFontMetrics().charsWidth(stringToDraw.toCharArray(), 0, stringToDraw.length());
-        return new int[] {textWidth,textHeight};
+        return new int[]{textWidth, textHeight};
     }
 
 
@@ -241,7 +281,7 @@ public class AssemblyComponent extends JButton {
         return result;
     }
     private void drawHexagon (Graphics g, Color color){
-        int lineWidth=(int) round(Math.min(getHeight()*0.03,getWidth()*0.03));
+        int lineWidth = (int) ceil(Math.min(getHeight() * 0.03, getWidth() * 0.03));
         if(lineWidth<1) lineWidth=1;
         Graphics2D g2d=(Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -276,9 +316,9 @@ public class AssemblyComponent extends JButton {
 }
 class FindAssembly extends Thread{
     public static boolean findedKey=false;
-    private Assembly[] searchField;
-    private double searchDirection;
-    private Assembly searchOrigin;
+    private final Assembly[] searchField;
+    private final double searchDirection;
+    private final Assembly searchOrigin;
     private static Assembly searchResult;
     FindAssembly(Assembly[] searchField, Assembly searchOrigin, double searchDirection){
         super();
